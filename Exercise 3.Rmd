@@ -1,0 +1,159 @@
+---
+title: "Exercise 6"
+author: "Rotem Kashani and Gal Drimer"
+output: pdf_document
+date: "2023-04-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+If you select 2 random integers between 1 and 10 without replacement, 
+what is the probability that the second integer is larger than the first? Write
+the R code that calculates the probability through a Monte Carlo simulation of 
+100 runs.Also calculate the exact probability
+answer: P(second integer is larger than the first) = 45/90 = 0.5
+
+```{r}
+n<-100
+count<-0
+for(i in 1:n){
+  x<-sample(1:10,size=2,replace=FALSE)
+  if(x[2]>x[1]){
+    count<-count+1
+  }
+}
+prob<-count/n
+prob
+```
+
+## Question 2
+
+If you select a random integer between 1 and 100, what is the probability that
+it is divisible by either 2 or 3? Calculate the exact probability using the 
+inclusion-exclusion principle and write a Monte Carlo simulation that provides 
+an approximation to the probability.
+answer:P(div by 2)=50, P(div by 3)=33, P(div by 6(by 2 and 3))=16.
+there for P(div by 2 or 3)=50+33-16=67
+67/100=0.67(it's the probability)
+
+```{r }
+n<-10000
+count<-0
+for(i in 1:n){
+  x<-sample(1:100,size=1,replace=TRUE)
+  if(x %% 2 == 0 | x %% 3 == 0){
+    count<-count+1
+  }
+}
+prob<-count/n
+prob
+```
+
+## Question 3
+
+If you roll two fair six-sided dice, what is the probability that the sum of 
+the two numbers is 7? Write the exact probability and provide a Monte Carlo 
+simulation that approximates the probability.
+answer: there are 6 outcomes that will give us the sum 7, overall there are 36
+outcome for two dice. we will do 6/36 = 1/6=0.1667.
+
+
+```{r }
+n<-10000
+count<-0
+for(i in 1:n){
+  x<-sample(1:6, size = 2, replace = TRUE)
+  if(sum(x) == 7){
+    count<-count+1
+  }
+}
+prob<-count/n
+prob
+```
+
+## Question 4
+
+Define the following events for a random experiment where a fair dice with
+four black wigs and two white wigs is tossed twice:
+A = In the first toss, a white wig was obtained
+B = In the first and second toss, wigs of different colors were obtained.
+Are A and B dependent? Provide reasoning to support your answer
+answer:
+P(A)=2/6
+P(B)= 2/6 * 4/6 + 4/6 * 2/6 = 8/36 + 8/36 = 16/36 = 4/9
+P(A and B)= 2/6 * 4/6= 8/36
+P(A)*P(B)= 2/6 * 4/9 = 4/27
+P(A and B) != P(A)*P(B)
+there for A and B dependent
+
+## Question 5
+
+A group of people are interviewed for a position in a desirable company.
+Among the candidates, 40% are Spanish speakers, and 60% of the Spanish 
+speakers have an academic degree. It is known that half of the academic degree
+holders are Spanish speakers.
+
+#### 5.1 
+What is the probability of a random candidate having an academic degree?
+answer: 0.4*0.6=0.24  Spanish speakers with academic degree.
+        0.24*2=0.48   half of the academic degree holders are Spanish speakers.
+        the probability of a random candidate having an academic degree is 0.48.
+
+#### 5.2 
+Are the events “a candidate with an academic degree” and “a Spanish-speaking
+candidate” dependent or not? Explain.
+answer: we will define 2 events:
+A= a Spanish-speaking candidate.
+B= a candidate with an academic degree.
+now we check if A and B dependent.
+P(A)=0.4, P(B)=0.48.
+P(A)*P(B)= 0.192
+P(A and B)=0.24
+P(A and B) != P(A)*P(B)
+there for A and B dependent.
+
+#### 5.3
+The company invites for a second interview only the candidates who speak 
+Spanish or have an academic degree. What percentage of the candidates will be
+invited for a second interview?
+answer:
+P(A or B)=P(A)+P(B)-P(A and B)=0.4+0.48-0.24=0.64
+the percentage of the candidates will be invited for a second interview is 64%.
+
+## Question 6
+
+A pair of dices are thrown over and over again until you get a sum of 10 or a 
+sum of 8 or a sum of 3 and then you stop. What is the probability that the game
+stops and on the last throw you got a sum of 10? (Calculate the exact
+probability and a Monte Carlo simulation that approximates the probability.)
+answer:
+P(A)=P(sum 3)=2/36
+P(B)=P(sum 8)=5/36
+P(C)=P(sum 10)=3/36
+P(D)=P(A or B or C)=10/36
+P(C|D)= (3/36) / (10/36) = 3/10
+
+```{r}
+n <- 10000
+count <- 0
+for (i in 1:n) {
+  sum <- 0 
+  while (sum != 10 && sum != 8 && sum != 3) {
+    x <- sample(1:6, size = 2, replace = TRUE)
+    sum <- sum(x)
+  }
+  if (sum == 10) {
+    count <- count + 1
+  }
+}
+prob <- count/n
+prob
+```
+
+# Good luck!
+
+
